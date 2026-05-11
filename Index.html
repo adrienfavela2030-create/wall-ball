@@ -2,8 +2,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wall Ball Pro</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Wall Ball Elite</title>
 
 <style>
 
@@ -15,134 +15,280 @@ font-family:Arial;
 }
 
 body{
-color:white;
-text-align:center;
-transition:.4s;
 min-height:100vh;
+color:white;
+overflow-x:hidden;
+transition:.4s;
 }
 
 body.original{
-background:linear-gradient(#4d8f3a,#2f5e25);
+background:
+radial-gradient(circle at top,#5aa043,#204d1a);
 }
 
 body.pro{
-background:linear-gradient(#220000,#000);
+background:
+radial-gradient(circle at top,#4a0000,#000);
 }
 
-h1{
-font-size:50px;
-margin:25px;
-letter-spacing:3px;
+.container{
+padding:25px;
+text-align:center;
 }
 
-.setup{
-padding:30px;
+.title{
+font-size:58px;
+font-weight:900;
+letter-spacing:4px;
+margin-top:15px;
+text-shadow:0 0 20px rgba(255,255,255,.3);
+animation:float 3s infinite;
+}
+
+@keyframes float{
+50%{transform:translateY(-5px);}
+}
+
+.subtitle{
+opacity:.8;
+margin-bottom:30px;
+}
+
+.glass{
+
+background:rgba(255,255,255,.08);
+
+backdrop-filter:blur(18px);
+
+border-radius:30px;
+
+padding:25px;
+
+max-width:700px;
+
+margin:auto;
+
+box-shadow:0 20px 40px rgba(0,0,0,.4);
+
 }
 
 input{
+
 display:block;
+
 margin:15px auto;
-width:280px;
-padding:16px;
-font-size:18px;
-border:none;
-border-radius:15px;
-outline:none;
-}
 
-.modeButtons button{
-width:180px;
+width:100%;
+
+max-width:450px;
+
+padding:18px;
+
 font-size:20px;
-}
 
-button{
-padding:18px 30px;
-font-size:18px;
-font-weight:bold;
 border:none;
+
+outline:none;
+
 border-radius:18px;
-cursor:pointer;
-transition:.25s;
-margin:8px;
+
 }
 
-button:hover{
+.bigBtn{
+
+padding:18px 35px;
+
+font-size:22px;
+
+font-weight:900;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+margin:10px;
+
+transition:.2s;
+
+}
+
+.bigBtn:hover{
 transform:scale(1.08);
 }
 
-.original button{
-background:#7d4cff;
+.original .bigBtn{
+background:#8a4dff;
 color:white;
+box-shadow:0 0 25px #8a4dff;
 }
 
-.pro button{
-background:#b10000;
+.pro .bigBtn{
+background:#b30000;
 color:white;
-box-shadow:0 0 20px red;
+box-shadow:0 0 25px red;
+}
+
+.modeRow{
+
+display:flex;
+
+justify-content:center;
+
+gap:20px;
+
+flex-wrap:wrap;
+
+margin:25px 0;
+
+}
+
+.modeCard{
+
+width:220px;
+
+padding:25px;
+
+border-radius:25px;
+
+cursor:pointer;
+
+font-size:22px;
+
+font-weight:bold;
+
+transition:.25s;
+
+background:rgba(255,255,255,.08);
+
+}
+
+.modeCard:hover{
+transform:scale(1.05);
+}
+
+.playerCounter{
+
+font-size:20px;
+
+margin:10px;
+
+opacity:.85;
+
 }
 
 #game{
 display:none;
 }
 
+#timer{
+
+font-size:48px;
+
+font-weight:bold;
+
+margin:20px;
+
+}
+
 .players{
+
 display:flex;
+
 flex-wrap:wrap;
+
 justify-content:center;
+
 gap:25px;
-padding:30px;
+
+margin-top:20px;
+
 }
 
 .player{
 
-width:300px;
+width:320px;
+
 padding:25px;
+
 border-radius:30px;
 
 background:rgba(255,255,255,.08);
 
-backdrop-filter:blur(12px);
+backdrop-filter:blur(16px);
 
-box-shadow:0 10px 30px rgba(0,0,0,.4);
+box-shadow:0 20px 40px rgba(0,0,0,.4);
 
 position:relative;
+
 overflow:hidden;
+
+transition:.25s;
+
 }
 
-.player h2{
-font-size:30px;
+.playerName{
+font-size:32px;
+font-weight:900;
 }
 
 .lives{
-font-size:55px;
+
+font-size:65px;
+
 margin:20px;
+
+font-weight:bold;
+
 }
 
-.lifeBtn{
-width:110px;
-font-size:28px;
+.lifeRow button{
+
+width:120px;
+
+height:70px;
+
+font-size:35px;
+
+margin:8px;
+
+border:none;
+
+border-radius:20px;
+
+cursor:pointer;
+
+font-weight:bold;
+
 }
 
 .dead{
-opacity:.35;
+opacity:.3;
 }
 
 .tombstone{
+
 position:absolute;
+
 left:50%;
+
 transform:translateX(-50%);
-font-size:110px;
+
+font-size:120px;
+
 animation:slam .7s forwards;
+
 }
 
 @keyframes slam{
 
 0%{
-top:-300px;
+top:-400px;
 }
 
-75%{
-top:15px;
+85%{
+top:-10px;
 }
 
 100%{
@@ -152,14 +298,34 @@ top:0;
 }
 
 #winner{
-font-size:60px;
+
+font-size:65px;
+
+font-weight:900;
+
 color:gold;
-margin:30px;
+
+margin:35px;
+
+animation:pulse 1s infinite;
+
 }
 
-#timer{
-font-size:40px;
-margin:20px;
+@keyframes pulse{
+50%{transform:scale(1.06);}
+}
+
+.shake{
+animation:shake .35s;
+}
+
+@keyframes shake{
+
+0%{transform:translateX(-10px);}
+25%{transform:translateX(10px);}
+50%{transform:translateX(-10px);}
+75%{transform:translateX(10px);}
+100%{transform:translateX(0);}
 }
 
 </style>
@@ -167,9 +333,15 @@ margin:20px;
 
 <body class="original">
 
-<div id="setup" class="setup">
+<div id="setup" class="container">
 
-<h1>WALL BALL</h1>
+<h1 class="title">WALL BALL</h1>
+
+<p class="subtitle">
+ELITE SCOREBOARD
+</p>
+
+<div class="glass">
 
 <div id="nameInputs">
 
@@ -178,35 +350,60 @@ margin:20px;
 
 </div>
 
-<button onclick="addInput()">+ Add Player</button>
+<p class="playerCounter" id="counter">
+2 / 4 Players
+</p>
 
-<div class="modeButtons">
-
-<button onclick="setMode('original')">
-ORIGINAL
+<button class="bigBtn"
+onclick="addInput()">
++ ADD PLAYER
 </button>
 
-<button onclick="setMode('pro')">
-PRO
-</button>
+
+<div class="modeRow">
+
+<div class="modeCard"
+onclick="setMode('original')">
+
+🟣 ORIGINAL
 
 </div>
 
-<button onclick="startGame()">
+<div class="modeCard"
+onclick="setMode('pro')">
+
+🩸 PROFESSIONAL
+
+</div>
+
+</div>
+
+
+<button class="bigBtn"
+onclick="startGame()">
+
 START MATCH
+
 </button>
+
+</div>
 
 </div>
 
 
 
-<div id="game">
+<div id="game" class="container">
 
-<h1>WALL BALL</h1>
+<h1 class="title">
+WALL BALL
+</h1>
 
-<div id="timer">00:00</div>
+<div id="timer">
+00:00
+</div>
 
-<div class="players" id="players"></div>
+<div id="players"
+class="players"></div>
 
 <div id="winner"></div>
 
@@ -220,20 +417,13 @@ START MATCH
 
 <script>
 
-let mode="original";
-
-let maxPlayers=4;
-
 let players=[];
 
 let seconds=0;
 
+function setMode(mode){
 
-function setMode(newMode){
-
-mode=newMode;
-
-document.body.className=newMode;
+document.body.className=mode;
 
 }
 
@@ -253,26 +443,29 @@ input.placeholder=
 
 container.appendChild(input);
 
+document.getElementById("counter")
+.innerHTML=
+container.children.length+" / 4 Players";
+
 }
 
 
 function startGame(){
 
-let inputs=
-document.querySelectorAll("#nameInputs input");
-
 players=[];
 
-inputs.forEach(i=>{
+document
+.querySelectorAll("#nameInputs input")
+.forEach(i=>{
 
-let name=i.value.trim();
-
-if(name){
+if(i.value.trim()){
 
 players.push({
 
-name:name,
+name:i.value.trim(),
+
 lives:5,
+
 dead:false
 
 });
@@ -289,22 +482,33 @@ return;
 
 }
 
-document.getElementById("setup").style.display="none";
+document.getElementById("setup")
+.style.display="none";
 
-document.getElementById("game").style.display="block";
+document.getElementById("game")
+.style.display="block";
 
 render();
 
 }
 
 
-function changeLife(index, amount){
+function changeLife(i,val){
 
-let p=players[index];
+let p=players[i];
 
 if(p.dead)return;
 
-p.lives+=amount;
+p.lives+=val;
+
+document.body.classList.add("shake");
+
+setTimeout(()=>{
+
+document.body.classList.remove("shake");
+
+},350);
+
 
 if(p.lives<=0){
 
@@ -312,7 +516,8 @@ p.lives=0;
 
 p.dead=true;
 
-document.getElementById("deathSound").play();
+document.getElementById(
+"deathSound").play();
 
 }
 
@@ -330,9 +535,11 @@ players.filter(x=>!x.dead);
 
 if(alive.length===1){
 
-document.getElementById("winner").innerHTML=
+document.getElementById(
+"winner").innerHTML=
 
-"🏆 "+alive[0].name+" WINS";
+"🏆 "+alive[0].name+
+" WINS";
 
 }
 
@@ -347,25 +554,37 @@ players.forEach((p,i)=>{
 
 html+=`
 
-<div class="player ${p.dead ? "dead" : ""}">
+<div class="player ${p.dead?"dead":""}">
 
-${p.dead ? '<div class="tombstone">🪦</div>' : ""}
+${p.dead?
+'<div class="tombstone">🪦</div>'
+:""}
 
-<h2>${p.name}</h2>
+<div class="playerName">
 
-<div class="lives">
-❤️ ${p.lives}
+${p.name}
+
 </div>
 
-<button class="lifeBtn"
+<div class="lives">
+
+❤️ ${p.lives}
+
+</div>
+
+<div class="lifeRow">
+
+<button
 onclick="changeLife(${i},1)">
 +
 </button>
 
-<button class="lifeBtn"
+<button
 onclick="changeLife(${i},-1)">
 −
 </button>
+
+</div>
 
 </div>
 
@@ -373,8 +592,8 @@ onclick="changeLife(${i},-1)">
 
 });
 
-document.getElementById("players").innerHTML=
-html;
+document.getElementById(
+"players").innerHTML=html;
 
 }
 
@@ -383,19 +602,18 @@ setInterval(()=>{
 
 seconds++;
 
-let mins=
+let m=
 Math.floor(seconds/60);
 
-let secs=
+let s=
 seconds%60;
 
-document.getElementById("timer").innerHTML=
+document.getElementById(
+"timer").innerHTML=
 
-String(mins).padStart(2,"0")
-
+String(m).padStart(2,"0")
 +":"
-
-+String(secs).padStart(2,"0");
++String(s).padStart(2,"0");
 
 },1000);
 
