@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wall Ball</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial;
+}
+
+body{
+background:#3f7d35;
+color:white;
+text-align:center;
+}
+
+.screen{
+padding:30px;
+}
+
+input{
+display:block;
+margin:12px auto;
+padding:12px;
+width:260px;
+border:none;
+border-radius:10px;
+font-size:18px;
+}
+
+button{
+padding:12px 20px;
+margin:8px;
+border:none;
+border-radius:10px;
+font-weight:bold;
+cursor:pointer;
+}
+
+.players{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:20px;
+margin-top:25px;
+}
+
+.player{
+width:250px;
+padding:20px;
+border-radius:20px;
+background:rgba(255,255,255,.1);
+}
+
+.dead{
+opacity:.4;
+}
+
+.tombstone{
+font-size:80px;
+animation:slam .8s forwards;
+}
+
+@keyframes slam{
+0%{transform:translateY(-300px);}
+100%{transform:translateY(0);}
+}
+
+#gameScreen{
+display:none;
+}
+
+#winner{
+font-size:40px;
+color:gold;
+margin-top:25px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="setupScreen" class="screen">
+
+<h1>WALL BALL</h1>
+<h2>Enter Players</h2>
+
+<div id="nameInputs">
+
+<input placeholder="Player 1 Name">
+<input placeholder="Player 2 Name">
+
+</div>
+
+<button onclick="addInput()">+ Add Player</button>
+<button onclick="startGame()">Start Game</button>
+
+<p>2 Required • 4 Max</p>
+
+</div>
+
+
+<div id="gameScreen" class="screen">
+
+<h1>WALL BALL</h1>
+
+<div class="players" id="players"></div>
+
+<div id="winner"></div>
+
+</div>
+
+
+<audio id="deathSound">
+<source src="https://www.soundjay.com/misc/sounds/fail-buzzer-02.mp3">
+</audio>
+
+
+<script>
+
+let maxPlayers=4;
+let players=[];
+
+
+function addInput(){
+
+let container=document.getElementById("nameInputs");
+
+if(container.children.length>=maxPlayers){
+alert("4 player max");
+return;
+}
+
+let input=document.createElement("input");
+
+input.placeholder=
+"Player "+(container.children.length+1)+" Name";
+
+container.appendChild(input);
+
+}
+
+
+function startGame(){
+
+let inputs=
+document.querySelectorAll("#nameInputs input");
+
+players=[];
+
+inputs.forEach(input=>{
+
+let name=input.value.trim();
+
+if(name){
+
+players.push({
+name:name,
+lives:5,
+dead:false
+});
+
+}
+
+});
+
+if(players.length<2){
+
+alert("Need at least 2 players");
+return;
+
+}
+
+document.getElementById("setupScreen").style.display="none";
+document.getElementById("gameScreen").style.display="block";
+
+render();
+
+}
+
+
+function changeLife(index, amount){
+
+let p=players[index];
+
+if(p.dead)return;
+
+p.lives+=amount;
+
+if(p.lives<=0){
+
+p.lives=0;
+p.dead=true;
+
+document.getElementById("deathSound").play();
+
+}
+
+render();
+checkWinner();
+
+}
+
+
+function checkWinner(){
+
+let alive=players.filter(x=>!x.dead);
+
+if(alive.length===1){
+
+document.getElementById("winner").innerHTML=
+"🏆 "+alive[0].name+" WINS!";
+
+}
+
+}
+
+
+function render(){
+
+let html="";
+
+players.forEach((p,i)=>{
+
+html+=`
+
+<div class="player ${p.dead ? "dead" : ""}">
+
+${p.dead ? '<div class="tombstone">🪦</div>' : ""}
+
+<h2>${p.name}</h2>
+
+<h1>❤️ ${p.lives}</h1>
+
+<button onclick="changeLife(${i},1)">+1</button>
+<button onclick="changeLife(${i},-1)">-1</button>
+
+</div>
+
+`;
+
+});
+
+document.getElementById("players").innerHTML=html;
+
+}
+
+</script>
+
+</body>
+</html>
